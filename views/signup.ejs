@@ -1,0 +1,61 @@
+<%- include('partials/header'); -%>
+
+<form action="/signup">
+  <h2>Sign up</h2>
+  <label for="email">Email</label>
+  <input type="text" name="email" />
+  <div class="email error"></div>
+  <label for="password">Password</label>
+  <input type="password" name="password" />
+  <div class="password error"></div>
+  <button>Sign up</button>
+</form>
+
+<%- include('partials/footer'); -%>
+
+<script>
+  const form = document.querySelector('form');
+  const emailerr = document.getElementsByClassName("email")[0];
+  const passworderr = document.getElementsByClassName("password")[0];
+
+    // get values
+    const email = form.email.value;
+    const password = form.password.value;
+    
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+
+    if(!email) {
+        document.getElementsByClassName("email")[0].innerText = "Fill in Email field";
+        return false
+    }
+    if(!password) {
+        document.getElementsByClassName("password")[0].innerText = "Fill in Password field";
+        return false
+    }
+
+    (async ()=>{
+    const response = await fetch("/signup",{
+        method: "POST",
+        body: JSON.stringify({email, password}),
+        headers: {"Content-Type": "application/json"}
+    })
+    const result = await response.json();
+    if(!response.ok){
+        if(typeof result === "object") {
+            document.getElementsByClassName("email")[0].innerText = result.email;
+            document.getElementsByClassName("password")[0].innerText = result.password;
+        }
+        else{
+            emailerr.innerText = result;
+        }
+    }
+    else {
+        console.log(result);
+    }
+    })();
+
+
+  });
+</script>
