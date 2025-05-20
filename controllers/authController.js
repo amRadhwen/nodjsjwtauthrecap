@@ -78,9 +78,15 @@ const signin_post = async(req, res) => {
 	}
 }
 
+const signout_get = (req, res) => {
+	res.cookie("acctoken", "", {maxAge: 1});
+	res.redirect("/");
+}
+
 module.exports = {
 	signup_get,
 	signin_get,
 	signup_post,
-	signin_post
+	signin_post,
+	signout_get
 }
