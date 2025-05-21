@@ -44,6 +44,10 @@ nav li a{
   border-radius: 36px;
   background: #FEE996;
 }
+.logout {
+  background: #e32a2a;
+  color: white;
+}
 form h2{
   font-size: 2.4em;
   font-weight: 900;
